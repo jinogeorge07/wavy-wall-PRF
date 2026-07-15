@@ -159,8 +159,8 @@ idx_list = 1:nc;
 for i = 1:nc % min(12, size(U_hat,3))
 
     % ===== U: response =====
-    fU1 = figure('Visible','off','Position',FIG_POS);
-    %fU1 = figure('Visible','off','Position',[100 100 1000 800]);
+    %fU1 = figure('Visible','off','Position',FIG_POS);
+    fU1 = figure('Visible','off','Position',[100 100 1000 800]);
     U_plot = U_hat(:,:,i);
     U_plot(solid_mask) = NaN;
 
@@ -172,7 +172,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     %caxis([-max(abs(U_plot(:))) max(abs(U_plot(:)))]);
     %clim = max(abs(U_plot(:)), [], 'omitnan');
     %caxis([-clim clim]);
-    colormap(bluewhitered);
     caxis([-Umax_common Umax_common]);
 
     % Fill solid regions (below y1 and above y2) in the CURRENT axes
@@ -186,12 +185,12 @@ for i = 1:nc % min(12, size(U_hat,3))
     wavywall_tick_function(x, y, Lx, BIG_TICKS, NXT, NYT, AX_POS, CB_POS, Umax_common);
     %title(sprintf('U Response mode, c=%.2f, kz=%.2f', c_list(i), kz), 'FontSize', 24);
     daspect([1 1 1])
-    exportgraphics(fU1, fullfile(snapdir, sprintf('U_response_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 300);
+    exportgraphics(fU1, fullfile(snapdir, sprintf('U_response_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 200);
     close(fU1);
 
     % ===== X: forcing (U2_hat) =====
-    fU3 = figure('Visible','off','Position',FIG_POS);
-    %fU3 = figure('Visible','off','Position',[100 100 1000 800]);
+    %fU3 = figure('Visible','off','Position',FIG_POS);
+    fU3 = figure('Visible','off','Position',[100 100 1000 800]);
 
     U2_plot = U2_hat(:,:,i);
     U2_plot(solid_mask) = NaN;
@@ -201,11 +200,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     set(gca,'Color','white');
     shading flat
     hold on
-    %caxis([-max(abs(U2_plot(:))) max(abs(U2_plot(:)))]);
-    %clim = max(abs(U2_plot(:)), [], 'omitnan');
-    %caxis([-clim clim]);
-
-    colormap(bluewhitered);
     caxis([-U2max_common U2max_common]);
 
     fill_patch_wavywall(x_wall, y1_wall, y2_wall);
@@ -213,15 +207,13 @@ for i = 1:nc % min(12, size(U_hat,3))
     plot(x_wall, y2_wall, 'k', 'LineWidth', 2);
 
     wavywall_tick_function(x, y, Lx, BIG_TICKS, NXT, NYT, AX_POS, CB_POS, U2max_common);
-
-    %title(sprintf('X Forcing mode, c=%.2f, kz=%.2f', c_list(i), kz), 'FontSize', 24);
     daspect([1 1 1])
-    exportgraphics(fU3, fullfile(snapdir, sprintf('X_forcing_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 300);
+    exportgraphics(fU3, fullfile(snapdir, sprintf('X_forcing_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 200);
     close(fU3);
 
     % ===== V: response =====
-    fV1 = figure('Visible','off','Position',FIG_POS);
-    %fV1 = figure('Visible','off','Position',[100 100 1000 800]);
+    %fV1 = figure('Visible','off','Position',FIG_POS);
+    fV1 = figure('Visible','off','Position',[100 100 1000 800]);
 
     V_plot = V_hat(:,:,i);
     V_plot(solid_mask) = NaN;
@@ -229,11 +221,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     set(gcf,'Renderer','painters');
     set(gca,'Color','white');
     shading flat
-    %caxis([-max(abs(V_plot(:))) max(abs(V_plot(:)))]);
-%     clim = max(abs(V_plot(:)), [], 'omitnan');
-%     caxis([-clim clim]);
-
-    colormap(bluewhitered);
     caxis([-Vmax_common Vmax_common]);
 
     fill_patch_wavywall(x_wall, y1_wall, y2_wall);
@@ -244,12 +231,12 @@ for i = 1:nc % min(12, size(U_hat,3))
 
     %title(sprintf('V Response mode, c=%.2f, kz=%.2f', c_list(i), kz), 'FontSize', 24);
     daspect([1 1 1])
-    exportgraphics(fV1, fullfile(snapdir, sprintf('V_response_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 300);
+    exportgraphics(fV1, fullfile(snapdir, sprintf('V_response_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 200);
     close(fV1);
 
-    % ===== V: forcing (V2_hat) =====
-    fV3 = figure('Visible','off','Position',FIG_POS);
-    %fV3 = figure('Visible','off','Position',[100 100 1000 800]);
+    % ===== Y: forcing (V2_hat) =====
+    %fV3 = figure('Visible','off','Position',FIG_POS);
+    fV3 = figure('Visible','off','Position',[100 100 1000 800]);
 
     V2_plot = V2_hat(:,:,i);
     V2_plot(solid_mask) = NaN;
@@ -258,12 +245,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     set(gcf,'Renderer','painters');
     set(gca,'Color','white');
     shading flat
-
-    %caxis([-max(abs(V2_plot(:))) max(abs(V2_plot(:)))]);
-    clim = max(abs(V2_plot(:)), [], 'omitnan');
-    caxis([-clim clim]);
-
-    colormap(bluewhitered);
     caxis([-V2max_common V2max_common]);
 
     fill_patch_wavywall(x_wall, y1_wall, y2_wall);
@@ -274,12 +255,12 @@ for i = 1:nc % min(12, size(U_hat,3))
 
     %title(sprintf('Y Forcing mode, c=%.2f, kz=%.2f', c_list(i), kz), 'FontSize', 24);
     daspect([1 1 1])
-    exportgraphics(fV3, fullfile(snapdir, sprintf('Y_forcing_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 300);
+    exportgraphics(fV3, fullfile(snapdir, sprintf('Y_forcing_Re%d_kz%g_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 200);
     close(fV3);
 
     % ===== W: response =====
-    fW1 = figure('Visible','off','Position',FIG_POS);
-    %fW1 = figure('Visible','off','Position',[100 100 1000 800]);
+    %fW1 = figure('Visible','off','Position',FIG_POS);
+    fW1 = figure('Visible','off','Position',[100 100 1000 800]);
 
     W_plot = W_hat(:,:,i);
     W_plot(solid_mask) = NaN;
@@ -288,12 +269,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     set(gcf,'Renderer','painters');
     set(gca,'Color','white');
     shading flat
-
-    %caxis([-max(abs(W_plot(:))) max(abs(W_plot(:)))]);
-    %clim = max(abs(W_plot(:)), [], 'omitnan');
-    %caxis([-clim clim]);
-
-    colormap(bluewhitered);
     caxis([-Wmax_common Wmax_common]);
 
     % Fill solid regions
@@ -312,8 +287,8 @@ for i = 1:nc % min(12, size(U_hat,3))
 
 
     % ===== Z: forcing (W2_hat) =====
-    fW3 = figure('Visible','off','Position',FIG_POS);
-    %fW3 = figure('Visible','off','Position',[100 100 1000 800]);
+    %fW3 = figure('Visible','off','Position',FIG_POS);
+    fW3 = figure('Visible','off','Position',[100 100 1000 800]);
 
     W2_plot = W2_hat(:,:,i);
     W2_plot(solid_mask) = NaN;
@@ -322,12 +297,6 @@ for i = 1:nc % min(12, size(U_hat,3))
     set(gcf,'Renderer','painters');
     set(gca,'Color','white');
     shading flat
-
-    %caxis([-max(abs(W2_plot(:))) max(abs(W2_plot(:)))]);
-    %clim = max(abs(W2_plot(:)), [], 'omitnan');
-    %caxis([-clim clim]);
-
-    colormap(bluewhitered);
     caxis([-W2max_common W2max_common]);
 
     fill_patch_wavywall(x_wall, y1_wall, y2_wall);
@@ -338,7 +307,7 @@ for i = 1:nc % min(12, size(U_hat,3))
 
     %title(sprintf('W Forcing mode, c=%.2f, kz=%.2f', c_list(i), kz), 'FontSize', 24);
     daspect([1 1 1])
-    exportgraphics(fW3, fullfile(snapdir, sprintf('Z_forcing_Re%d_kz%d_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 300);
+    exportgraphics(fW3, fullfile(snapdir, sprintf('Z_forcing_Re%d_kz%d_c%d.png',Re, kz_val(i), c_index)), 'Resolution', 200);
     close(fW3);
 
 end
@@ -379,13 +348,17 @@ ax = gca;
 xlabel('x','FontSize',32);
 ylabel('y','FontSize',32);
 
-% Force colorbar limits symmetric about zero
+% Force colorbar limits symmetric about zero - THIS MUST BE BEFORE COLORBAR
+caxis(ax, [-clim_val clim_val]);
 
+% Now create the colorbar (it will inherit the symmetric limits)
 c = colorbar;
-c.Ticks      = linspace(-clim_val, clim_val, 7);
-%c.Ticks      = linspace(c.Limits(1), c.Limits(2), 6);
+c.Ticks = linspace(-clim_val, clim_val, 7);
 c.TickLabels = strip_zeros(compose('%.3f', c.Ticks));
-c.FontSize   = BIG_TICKS;
+c.FontSize = BIG_TICKS;
+
+% IMPORTANT: Ensure the colormap is applied to this figure
+colormap(ax, bluewhitered);  % Re-apply colormap to ensure it's using bluewhitered
 
 % Axis styling
 ax.FontSize = BIG_TICKS;
@@ -398,21 +371,21 @@ ax.YAxis.Exponent = 0;
 
 % Ticks (from beginning to end)
 xmin = min(x(:));
-ax.XLim  = [xmin Lx];
+ax.XLim = [xmin Lx];
 ax.XTick = linspace(xmin, Lx, NXT);
 ax.XTickLabel = strip_zeros(compose('%.2f', ax.XTick));
 
 ymin = min(y(:));
 ymax = max(y(:));
-ax.YLim  = [ymin ymax];
+ax.YLim = [ymin ymax];
 ax.YTick = linspace(ymin, ymax, NYT);
 ax.YTickLabel = strip_zeros(compose('%.2f', ax.YTick));
 
 daspect([1 1 1]);
+
 % Positioning
 set(ax, 'Units','normalized', 'Position', AX_POS);
-set(c,  'Units','normalized', 'Position', CB_POS);
-
+set(c, 'Units','normalized', 'Position', CB_POS);
 end
 
 

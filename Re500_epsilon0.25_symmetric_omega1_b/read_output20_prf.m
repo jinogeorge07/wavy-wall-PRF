@@ -142,7 +142,6 @@ if show_velocity == "true"
         set(gcf,'Renderer','painters');
         set(gca,'Color','white');
         shading flat
-        colormap(bluewhitered);                     % ensures the center color is white
         %contour(x, y, crit_contour, [0 0], 'k', 'LineWidth', 2);   % critical layer
         %caxis([-max(abs(U_plot(:))) max(abs(U_plot(:)))]);  % ensures 0 is centered
         caxis([-Umax_common Umax_common]);
@@ -202,8 +201,6 @@ if show_velocity == "true"
         set(gcf,'Renderer','painters');
         set(gca,'Color','white');
         shading flat
-        colormap(bluewhitered);                     % ensures the center color is white
-
         %caxis([-max(abs(V_plot(:))) max(abs(V_plot(:)))]);  % ensures 0 is centered
         caxis([-Vmax_common Vmax_common]);
         hold on
@@ -261,7 +258,6 @@ if show_velocity == "true"
         set(gcf,'Renderer','painters');
         set(gca,'Color','white');
         shading flat
-        colormap(bluewhitered);                     % ensures the center color is white
         %caxis([-max(abs(W_plot(:))) max(abs(W_plot(:)))]);  % ensures 0 is centered
         caxis([-Wmax_common Wmax_common]);
         hold on
@@ -343,13 +339,17 @@ ax = gca;
 xlabel('x','FontSize',32);
 ylabel('y','FontSize',32);
 
-% Force colorbar limits symmetric about zero
+% Force colorbar limits symmetric about zero - THIS MUST BE BEFORE COLORBAR
+caxis(ax, [-clim_val clim_val]);
 
+% Now create the colorbar (it will inherit the symmetric limits)
 c = colorbar;
-c.Ticks      = linspace(-clim_val, clim_val, 7);
-%c.Ticks      = linspace(c.Limits(1), c.Limits(2), 6);
+c.Ticks = linspace(-clim_val, clim_val, 7);
 c.TickLabels = strip_zeros(compose('%.3f', c.Ticks));
-c.FontSize   = BIG_TICKS;
+c.FontSize = BIG_TICKS;
+
+% IMPORTANT: Ensure the colormap is applied to this figure
+colormap(ax, bluewhitered);  % Re-apply colormap to ensure it's using bluewhitered
 
 % Axis styling
 ax.FontSize = BIG_TICKS;
@@ -362,23 +362,22 @@ ax.YAxis.Exponent = 0;
 
 % Ticks (from beginning to end)
 xmin = min(x(:));
-ax.XLim  = [xmin Lx];
+ax.XLim = [xmin Lx];
 ax.XTick = linspace(xmin, Lx, NXT);
 ax.XTickLabel = strip_zeros(compose('%.2f', ax.XTick));
 
 ymin = min(y(:));
 ymax = max(y(:));
-ax.YLim  = [ymin ymax];
+ax.YLim = [ymin ymax];
 ax.YTick = linspace(ymin, ymax, NYT);
 ax.YTickLabel = strip_zeros(compose('%.2f', ax.YTick));
 
 daspect([1 1 1]);
+
 % Positioning
 set(ax, 'Units','normalized', 'Position', AX_POS);
-set(c,  'Units','normalized', 'Position', CB_POS);
-
+set(c, 'Units','normalized', 'Position', CB_POS);
 end
-
 
 function out = strip_zeros(lbls)
 % Remove trailing zeros so labels have <= 2 decimals but look clean (1 not 1.00).
